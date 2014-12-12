@@ -33,6 +33,8 @@ abstract class ContextualValidator implements MessageProviderInterface
 	 */
 	protected $messages = array();
 
+	protected $customAttributes = array();
+
 	/**
 	 * Store any contexts we are validating within.
 	 * 
@@ -111,6 +113,11 @@ abstract class ContextualValidator implements MessageProviderInterface
 		return $this->attributes;
 	}
 
+    public function setCustomAttributes($attributes)
+    {
+        $this->customAttributes = $attributes;
+    }
+
 	/**
 	 * Add a validation context.
 	 * 
@@ -182,7 +189,7 @@ abstract class ContextualValidator implements MessageProviderInterface
 	{
 		$rules = $this->bindReplacements($this->getRulesInContext());
 
-		$validator = Validator::make($this->attributes, $rules, $this->messages);
+		$validator = Validator::make($this->attributes, $rules, $this->messages, $this->customAttributes);
 
 		$this->addConditionalRules($validator);
 
